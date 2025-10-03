@@ -1,0 +1,69 @@
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+
+var user = require('./routes/user');
+var address = require('./routes/address');
+var cart = require('./routes/cart');
+var Category = require('./routes/Category');
+var coupon = require('./routes/coupon');
+var order = require('./routes/order');
+var payment = require('./routes/payment');
+var product = require('./routes/product');
+var riview = require('./routes/review')
+var wishlist = require('./routes/wishlist')
+
+const mongoose = require('mongoose');
+const { error } = require('console');
+mongoose.connect('mongodb://localhost:27017/ecommerce')
+.then(()=>{
+  console.log('mongoDb connect successfully');
+  
+})
+.catch(()=>{
+  console.log(error);
+  
+})
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/user', user);
+app.use('/address', address);
+app.use('/cart', cart);
+app.use('/category', Category);
+app.use('/coupon', coupon);
+app.use('/order', order);
+app.use('/payment', payment);
+app.use('/product', product);
+app.use('/review', riview);
+app.use('/wishlist', wishlist);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
