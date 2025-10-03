@@ -19,7 +19,7 @@ const addressSchema = new mongoose.Schema({
   },
   country: {
     type : String,
-    required : [true, "Please Enter your state"]
+    required : [true, "Please Enter your country"]
   },
   pincode: {
     type : String,
