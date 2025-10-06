@@ -25,7 +25,10 @@ const addressSchema = new mongoose.Schema({
     type : String,
     required : [true, "Please Enter your pincode"]
   },
-  phone: String,
+  phone: {
+    type : String,
+    required : [true, "Please Enter your phone."]
+  },
   isDefault: { type: Boolean, default: false }
 });
 

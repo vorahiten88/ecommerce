@@ -10,7 +10,7 @@ const couponSchema = new mongoose.Schema({
     required: [true,'please enter discountValue']
   },
   expiryDate: { type: Date, default : Date.now,
-  required: [true ,'please enter date']
+ 
  },
   isActive: { type: Boolean, default: true }
 });
